@@ -56,18 +56,18 @@ FROM       ubuntu:latest
 > be outdated. Therefore in this example, we will use the official MongoDB
 > packages.
 
-We will begin with importing the MongoDB public GPG key. We will also create
+We will begin with importing the MongoDB public GPG key. We will also update apt-get sources and create
 a MongoDB repository file for the package manager.
 
 ```conf
 # Installation:
 # Import MongoDB public GPG key AND create a MongoDB list file
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
-RUN apt-get install -y --no-install-recommends software-properties-common
+RUN apt-get update && apt-get install -y --no-install-recommends software-properties-common
 RUN echo "deb http://repo.mongodb.org/apt/ubuntu $(cat /etc/lsb-release | grep DISTRIB_CODENAME | cut -d= -f2)/mongodb-org/3.2 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-3.2.list
 ```
 
-After this initial preparation we can update our packages and install MongoDB.
+After this initial preparation we can update our packages again and install MongoDB.
 
 ```conf
 # Update apt-get sources AND install MongoDB
